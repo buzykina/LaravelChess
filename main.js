@@ -154,7 +154,46 @@ function showMoves(){
 			}
 		}
 	}
+	else if(piece == 5+6*side){// rook
+		
+	}
+	else if(piece == 4+6*side){// knight
+		
+	}
+	else if(piece == 3+6*side){// bishop
+		
+	}
+	else if(piece == 2+6*side){// queen
+		
+	}
+	else if(piece == 1+6*side){// king
+		
+	}
 }
+//////////////////////////stuuf to add later/////////////
+
+function countNrOfMoves(side){
+	
+}
+
+function isInCheck(side){
+	
+}
+
+function isAvailable(chessPos){
+	// for () possible moves
+	// if chessPos == posmoves[i]
+	// return true
+	// after loop return false
+}
+
+
+
+
+
+
+////////////////////////end stuff to add later/////////////
+
 function pawnMovedLastTurn(x,y){
 	return stateOfGame[stateOfGame.length - 1][y][x]==((1-side)*6 + 6) && field[y][x]==0;
 }
@@ -205,18 +244,20 @@ can.onclick = function(){
 			selection(x,y);
 		}else{
 			let toPos = getChessPosition(x,y);
-			movePiece(selected,toPos);
-			let xh = new XMLHttpRequest();
-			xh.onreadystatechange = function() {
-				if (this.readyState == 4 && this.status == 200) {
-					let f = JSON.parse(this.responseText)["from"];
-					let t = JSON.parse(this.responseText)["to"];
-					movePiece(stringToChessPosition(f),stringToChessPosition(t));
+			if(isAvailable(toPos)){
+				movePiece(selected,toPos);
+				let xh = new XMLHttpRequest();
+				xh.onreadystatechange = function() {
+					if (this.readyState == 4 && this.status == 200) {
+						let f = JSON.parse(this.responseText)["from"];
+						let t = JSON.parse(this.responseText)["to"];
+						movePiece(stringToChessPosition(f),stringToChessPosition(t));
+					}
 				}
+				xh.open("POST","http://127.0.0.1:5000/bot/",true);
+				console.log('{"id":'+idOfGame+',"from":"'+positionToString(selected)+'","to":"'+positionToString(toPos)+'"}');
+				xh.send('{"id":'+idOfGame+',"from":"'+positionToString(selected)+'","to":"'+positionToString(toPos)+'"}');
 			}
-			xh.open("POST","http://127.0.0.1:5000/bot/",true);
-			console.log('{"id":'+idOfGame+',"from":"'+positionToString(selected)+'","to":"'+positionToString(toPos)+'"}');
-			xh.send('{"id":'+idOfGame+',"from":"'+positionToString(selected)+'","to":"'+positionToString(toPos)+'"}');
 			deselection();
 		}
 	}
