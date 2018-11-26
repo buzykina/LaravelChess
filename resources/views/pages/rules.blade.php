@@ -1,23 +1,33 @@
 <!doctype html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
 
-	<title>Laravel</title>
+	<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+		<head>
+			<meta charset="utf-8">
+			<meta name="viewport" content="width=device-width, initial-scale=1">
 
-	<!-- Fonts -->
-	<link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet" type="text/css">
+			<title>Laravel</title>
 
-	<!-- Styles -->
-	<link rel="stylesheet" type="text/css" href="{{ url('/css/app.css') }}" />
+			<!-- Fonts -->
+			<link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet" type="text/css">
 
-</head>
-<body>
-<?php
-config(['global.pagename' => 'rules']);
-?>
-@include('included.nav');
+			<!-- Styles -->
+			<link rel="stylesheet" type="text/css" href="{{ url('/css/app.css') }}" />
 
-</body>
+		</head>
+	<body>
+		<?php
+		config(['global.pagename' => 'rules']);
+		?>
+		@include('included.nav')
+		<?php
+			$rule = DB::table('rules')->get();
+			foreach ($rule as $r){
+				echo $r->title."<br>";
+				echo '<img src = "'.url()->current().$r->image.'">';
+				echo $r->description."<br>";
+			}
+		?>
+
+	</body>
+
 </html>

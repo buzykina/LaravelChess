@@ -5,7 +5,8 @@
         <div class="navbar-brand">
           <a class="navbar-item" href="{{ URL::to('/home') }}" style="font-weight:bold;">
     play chess
-</a>
+          </a>
+
           <span class="navbar-burger burger" data-target="navMenu">
             <span></span>
             <span></span>
@@ -51,5 +52,16 @@
         </div>
       </div>
 </nav>
+
+<script type="text/javascript">
+    (function() {
+        var burger = document.querySelector('.burger');
+        var nav = document.querySelector('#'+burger.dataset.target);
+        burger.addEventListener('click', function(){
+            burger.classList.toggle('is-active');
+            nav.classList.toggle('is-active');
+        });
+    })();
+</script>
 
 </html>

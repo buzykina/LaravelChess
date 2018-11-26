@@ -10,6 +10,7 @@
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet" type="text/css">
 
         <!-- Styles -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
         <link rel="stylesheet" type="text/css" href="{{ url('/css/app.css') }}" />
 
     </head>
@@ -17,7 +18,6 @@
     <?php
     config(['global.pagename' => 'home']);
     ?>
-    @include('included.nav');
-
+    @include('included.nav')
     </body>
 </html>
