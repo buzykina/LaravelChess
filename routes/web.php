@@ -12,13 +12,29 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('pages.index');
 });
 
-Route::get('/helloworld', function () {
-    return view('helloworld', ['name' => 'GG']);
+Route::get('/home', function () {
+    return view('pages.index');
 });
 
-Route::get('/helloworld/{name?}', function ($name = null) {
-    return view('helloworld', ['name' => $name]);
+Route::get('/login', function () {
+    return view('pages.login');
+});
+
+Route::get('/profile/{id?}', function ($id = null) {
+    if($id == null)
+    {
+        return view('pages.noaccess');
+    }
+    return view('pages.profile',['id' => $id]);
+});
+
+Route::get('/admin', function () {
+    return view('pages.profile');
+});
+
+Route::get('/rules', function () {
+    return view('pages.rules');
 });
