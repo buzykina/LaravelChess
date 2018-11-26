@@ -8,7 +8,7 @@
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet" type="text/css">
-		
+		<link rel="stylesheet" type="text/css" href="{{ url('/css/app.css') }}" />
         <!-- Styles -->
         <style>
             html, body {
@@ -64,6 +64,16 @@
         </style>
     </head>
     <body>
+	
+	<a class="button is-success">Success</a>
+	
+	
+	<progress class="progress is-primary" value="30" max="100">30%</progress>
+<progress class="progress is-small is-primary" max="100">15%</progress>
+<progress class="progress is-danger" max="100">30%</progress>
+<progress class="progress is-medium is-dark" max="100">45%</progress>
+<progress class="progress is-large is-info" max="100">60%</progress>
+
         <div class="flex-center position-ref full-height">
             @if (Route::has('login'))
                 <div class="top-right links">
