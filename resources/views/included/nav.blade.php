@@ -1,10 +1,14 @@
 <html>
-
+<style>
+    .navbar-item img {
+        max-height: 2.5rem;
+    }
+</style>
 <nav class="navbar is-primary">
       <div class="container">
         <div class="navbar-brand">
           <a class="navbar-item" href="{{ URL::to('/home') }}" style="font-weight:bold;">
-    play chess
+              <img src="'.url()->current().'/../img/chess.png" alt="Logo">
           </a>
 
           <span class="navbar-burger burger" data-target="navMenu">
@@ -19,9 +23,13 @@
                   if(config('global.pagename')=='home')
                       {
               ?>
-                        <a href=" {{ URL::to('/home') }}" class="navbar-item is-active">Home</a>
-                        <a href="{{URL::to('/rules')}}" class="navbar-item">Rules</a>
-                        <a href="{{URL::to('/login')}}" class="navbar-item">Log IN</a>
+                  <div class="tabs is-right">
+                      <ul>
+                        <li ><a href=" {{ URL::to('/home') }}">Home</a></li>
+                        <li><a href="{{URL::to('/rules')}}">Rules</a></li>
+                        <li><a href="{{URL::to('/login')}}">Log IN</a></li>
+                      </ul>
+                  </div>
               <?php
                       }
               ?>
