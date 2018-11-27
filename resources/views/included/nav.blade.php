@@ -3,11 +3,24 @@
     .navbar-item img {
         max-height: 2.5rem;
     }
+    .navbar{
+        background-color:  rgba(0, 0, 0,.1)  !important;
+    }
+    .navbar-item:hover {
+        background-color: grey !important;
+    }
+    .tabs li.is-active a {
+        border-bottom-color: grey !important;
+        color: grey !important;
+    }
+    ul{
+        border: 0 !important;
+    }
 </style>
 <nav class="navbar is-primary">
       <div class="container">
         <div class="navbar-brand">
-          <a class="navbar-item" href="{{ URL::to('/home') }}" style="font-weight:bold;">
+          <a class="navbar-item is-hoverable" href="{{ URL::to('/home') }}" style="font-weight:bold;">
               <img src="'.url()->current().'/../img/chess.png" alt="Logo">
           </a>
 
@@ -25,7 +38,7 @@
               ?>
                   <div class="tabs is-right">
                       <ul>
-                        <li ><a href=" {{ URL::to('/home') }}">Home</a></li>
+                        <li class = "is-active"><a href=" {{ URL::to('/home') }}">Home</a></li>
                         <li><a href="{{URL::to('/rules')}}">Rules</a></li>
                         <li><a href="{{URL::to('/login')}}">Log IN</a></li>
                       </ul>
@@ -38,9 +51,13 @@
                   if(config('global.pagename')=='rules')
                       {
               ?>
-                        <a href=" {{ URL::to('/home') }}" class="navbar-item">Home</a>
-                        <a href="{{URL::to('/rules')}}" class="navbar-item is-active">Rules</a>
-                        <a href="{{URL::to('/login')}}" class="navbar-item">Log IN</a>
+                  <div class="tabs is-right">
+                      <ul>
+                          <li><a href=" {{ URL::to('/home') }}">Home</a></li>
+                          <li class = "is-active"><a href="{{URL::to('/rules')}}">Rules</a></li>
+                          <li><a href="{{URL::to('/login')}}">Log IN</a></li>
+                      </ul>
+                  </div>
               <?php
                       }
               ?>
@@ -49,9 +66,13 @@
                   if(config('global.pagename')=='login')
                       {
               ?>
-                        <a href=" {{ URL::to('/home') }}" class="navbar-item">Home</a>
-                        <a href="{{URL::to('/rules')}}" class="navbar-item">Rules</a>
-                        <a href="{{URL::to('/login')}}" class="navbar-item is-active">Log IN</a>
+                  <div class="tabs is-right">
+                      <ul>
+                          <li><a href=" {{ URL::to('/home') }}">Home</a></li>
+                          <li><a href="{{URL::to('/rules')}}">Rules</a></li>
+                          <li class = "is-active"><a href="{{URL::to('/login')}}">Log IN</a></li>
+                      </ul>
+                  </div>
               <?php
                       }
               ?>

@@ -1,4 +1,9 @@
 <!doctype html>
+<style>
+    #banner{
+        width:100%;
+    }
+</style>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         <meta charset="utf-8">
@@ -18,6 +23,9 @@
     <?php
     config(['global.pagename' => 'home']);
     ?>
-    @include('included.nav')
+    <div>
+        @include('included.nav')
+        <img id = "banner" src="'.url()->current().'/../img/banner.jpg">
+    </div>
     </body>
 </html>
