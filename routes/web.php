@@ -38,3 +38,8 @@ Route::get('/admin', function () {
 Route::get('/rules', function () {
     return view('pages.rules');
 });
+
+
+Route::get('/test', function () {
+    return view('included.chat');
+});

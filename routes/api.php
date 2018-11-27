@@ -16,3 +16,15 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+
+
+Route::get('/chat', function() {
+    return DB::table('chat')->get();
+});
+
+Route::post('/chat', function(Request $request) {
+	DB::table('chat')->insert([
+	['message' => $request->input('message'), 'userid' => $request->input('userid')]
+	]);
+});
