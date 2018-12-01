@@ -1,3 +1,15 @@
+<?php
+
+use Illuminate\Support\Facades\Auth;
+
+// Get the currently authenticated user...
+$user = Auth::user();
+
+// Get the currently authenticated user's ID...
+$id = Auth::id();
+
+?>
+
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
@@ -102,7 +114,7 @@
 							<div class="column is-2"></div>
 							<div class="column is-2  has-text-right is-size-7 has-text-weight-semibold">Username</div>
 							<div class="column has-text-left">
-								<input class="input is-size-7" type="text"></input>
+								<input class="input is-size-7" type="text" value="{{$user->name}}"></input>
 							</div>
 						</div>
 					</li>
@@ -111,7 +123,7 @@
 							<div class="column is-2"></div>
 							<div class="column is-2	 has-text-right is-size-7 has-text-weight-semibold">Email</div>
 							<div class="column has-text-left">
-								<input class="input is-size-7" type="text"></input>
+								<input class="input is-size-7" type="text" value="{{$user->email}}"></input>
 							</div>
 						</div>
 					</li>

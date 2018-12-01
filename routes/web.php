@@ -23,12 +23,8 @@ Route::get('/login', function () {
     return view('pages.login');
 });
 
-Route::get('/profile/{id?}', function ($id = null) {
-    if($id == null)
-    {
-        return view('pages.noaccess');
-    }
-    return view('pages.profile',['id' => $id]);
+Route::get('/profile', function () {
+    return view('pages.profile');
 });
 
 Route::get('/admin', function () {
@@ -43,3 +39,6 @@ Route::get('/rules', function () {
 Route::get('/test', function () {
     return view('included.chat');
 });
+Auth::routes();
+
+//Route::get('/home', 'HomeController@index')->name('home');
