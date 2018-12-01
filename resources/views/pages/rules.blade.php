@@ -61,7 +61,9 @@
 						<div class="card-content">
 							<div class="content">
 								<h4><?php echo $r->title; ?></h4>
-								<p><?php echo $r->description;?></p>
+								<p><?php $pos=strpos($r->description, ' ', 120);
+                                    echo substr($r->description,0,$pos );?> . . .
+								</p>
 								<span class="button is-link modal-button" style="background-color: gray">More info</span>
 							</div>
 						</div>
