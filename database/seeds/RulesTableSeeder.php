@@ -13,14 +13,14 @@ class RulesTableSeeder extends Seeder
     {
         DB::table('rules')->insert([
             [
-            'title' => "How to Setup the Chessboard",
-            'description' => "At the beginning of the game the chessboard is laid out so that each player has the white (or light) color square in the bottom right-hand side. The chess pieces are then arranged the same way each time. The second row (or rank) is filled with pawns. The rooks go in the corners, then the knights next to them, followed by the bishops, and finally the queen, who always goes on her own matching color (white queen on white, black queen on black), and the king on the remaining square.",
-            'image' => "/../img/setup.webp",
+				'title' => "How to Setup the Chessboard",
+				'description' => "At the beginning of the game the chessboard is laid out so that each player has the white (or light) color square in the bottom right-hand side. The chess pieces are then arranged the same way each time. The second row (or rank) is filled with pawns. The rooks go in the corners, then the knights next to them, followed by the bishops, and finally the queen, who always goes on her own matching color (white queen on white, black queen on black), and the king on the remaining square.",
+				'image' => "/../img/setup.webp",
             ],
             [
-            'title' => "How to Move the King in Chess",
-            'description' => "The king is the most important piece, but is one of the weakest. The king can only move one square in any direction - up, down, to the sides, and diagonally. The king may never move himself into check (where he could be captured). When the king is attacked by another piece this is called \"check\".",
-            'image' => "/../img/king_move.webp",
+				'title' => "How to Move the King in Chess",
+				'description' => "The king is the most important piece, but is one of the weakest. The king can only move one square in any direction - up, down, to the sides, and diagonally. The king may never move himself into check (where he could be captured). When the king is attacked by another piece this is called \"check\".",
+				'image' => "/../img/king_move.webp",
             ],
             [
                 'title' => "How to Move the Queen in Chess",

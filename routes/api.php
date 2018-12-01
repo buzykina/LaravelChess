@@ -20,11 +20,16 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 
 Route::get('/chat', function() {
-    return DB::table('chat')->get();
+	$request = DB::table('chat')->get();
+	//foreach ($request as $gg) {
+		//$gg = (DB::table('users')->where('id',$gg->userid)->get())->name;
+		
+	//}
+    return $request;
 });
 
 Route::post('/chat', function(Request $request) {
 	DB::table('chat')->insert([
-	['message' => $request->input('message'), 'userid' => $request->input('userid')]
+	['message' => $request->input('message'), 'userid' => $request->input('userid'),'created_at' => date('Y-m-d H:i:s')]
 	]);
 });

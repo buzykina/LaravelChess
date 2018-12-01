@@ -21,7 +21,9 @@
       <div class="container">
         <div class="navbar-brand">
           <a class="navbar-item is-hoverable" href="{{ URL::to('/home') }}" style="font-weight:bold;">
-              <img src="'.url()->current().'/../img/chess.png" alt="Logo">
+              <img src="<?php
+				echo URL::to('/')."/img/chess.png";
+			  ?>" alt="Logo">
           </a>
 
           <span class="navbar-burger burger" data-target="navMenu">
@@ -44,12 +46,7 @@
                       </ul>
                   </div>
               <?php
-                      }
-              ?>
-
-              <?php
-                  if(config('global.pagename')=='rules')
-                      {
+                      }elseif(config('global.pagename')=='rules'){
               ?>
                   <div class="tabs is-right">
                       <ul>
@@ -59,12 +56,7 @@
                       </ul>
                   </div>
               <?php
-                      }
-              ?>
-
-              <?php
-                  if(config('global.pagename')=='login')
-                      {
+                      }elseif(config('global.pagename')=='login'){
               ?>
                   <div class="tabs is-right">
                       <ul>
@@ -75,8 +67,18 @@
                   </div>
               <?php
                       }
+					 else{
               ?>
-
+				  <div class="tabs is-right">
+                      <ul>
+                          <li><a href=" {{ URL::to('/home') }}">Home</a></li>
+                          <li><a href="{{URL::to('/rules')}}">Rules</a></li>
+                          <li><a href="{{URL::to('/login')}}">Log IN</a></li>
+                      </ul>
+                  </div>
+			  <?php
+					 }
+			  ?>
           </div>
         </div>
       </div>
