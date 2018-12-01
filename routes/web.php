@@ -11,17 +11,11 @@
 |
 */
 
-Route::get('/', function () {
-    return view('pages.index');
-});
+Route::get('/', 'PagesController@index');
 
-Route::get('/home', function () {
-    return view('pages.index');
-});
+Route::get('/home', 'PagesController@index');
 
-Route::get('/login', function () {
-    return view('pages.login');
-});
+Route::get('/login', 'PagesController@login');
 
 Route::get('/profile/{id?}', function ($id = null) {
     if($id == null)
@@ -35,9 +29,7 @@ Route::get('/admin', function () {
     return view('pages.profile');
 });
 
-Route::get('/rules', function () {
-    return view('pages.rules');
-});
+Route::get('/rules', 'PagesController@rules');
 
 
 Route::get('/test', function () {
