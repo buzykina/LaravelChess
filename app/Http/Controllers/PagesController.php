@@ -15,4 +15,7 @@ class PagesController extends Controller
     public function rules(){
         return view('pages.rules');
     }
+    public function profile(){
+        return view('pages.profile');
+    }
 }

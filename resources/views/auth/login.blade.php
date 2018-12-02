@@ -1,64 +1,107 @@
-@extends('layouts.app')
+<!doctype html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-@section('content')
+    <title>Login</title>
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet" type="text/css">
+
+    <!-- Styles -->
+    <link rel="stylesheet" type="text/css" href="{{ url('/css/app.css') }}" />
+    <style>
+        #container {
+            width:600px !important;
+            height: 437px !important;
+        }
+        #profile{
+            height: 128px;
+            padding: 0 0 20px !important;
+        }
+        #subtitle{
+            margin: 10px 0 0 0;
+        }
+        #title{
+            margin: 0px 0 10px 0;
+        }
+        #col1{
+            border-left: thick solid grey;
+        }
+    </style>
+
+</head>
+<body>
+<?php
+config(['global.pagename' => 'login']);
+?>
+@include('included.nav')
+<section class="is-success is-fullheight">
 <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Login') }}</div>
-
-                <div class="card-body">
+    <div class="columns is-vcentered">
+        <div class="hero-body column">
+            <div id = "container" class="container has-text-centered level-item">
+                <div>
+                    <h3 class="title has-text-grey">Login</h3>
+                    <p id = "subtitle" class="subtitle has-text-grey">Please login to proceed.</p>
+                    <div class="box">
+                        <figure class="avatar">
+                            <img id = "profile" src="'.url()->current().'/../img/profile.png">
+                        </figure>
                     <form method="POST" action="{{ route('login') }}">
-                        @csrf
+                        {{ csrf_field() }}
 
-                        <div class="form-group row">
-                            <label for="email" class="col-sm-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
+                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
+                            <label for="email" class="col-md-4 control-label">E-Mail</label>
 
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required autofocus>
+                            <div class="field">
+                                <div class="control">
+                                <input id="email" type="email" class="input is-large" name="email" value="{{ old('email') }}" required autofocus>
 
                                 @if ($errors->has('email'))
-                                    <span class="invalid-feedback" role="alert">
+                                    <span class="help-block">
                                         <strong>{{ $errors->first('email') }}</strong>
                                     </span>
                                 @endif
+                                </div>
                             </div>
                         </div>
 
-                        <div class="form-group row">
-                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
+                        <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
+                            <label for="password" class="col-md-4 control-label">Password</label>
 
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required>
+                            <div class="field">
+                                <div class="control">
+                                <input id="password" type="password" class="input is-large" name="password" required>
 
                                 @if ($errors->has('password'))
-                                    <span class="invalid-feedback" role="alert">
+                                    <span class="help-block">
                                         <strong>{{ $errors->first('password') }}</strong>
                                     </span>
                                 @endif
                             </div>
+                            </div>
                         </div>
 
-                        <div class="form-group row">
-                            <div class="col-md-6 offset-md-4">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-
-                                    <label class="form-check-label" for="remember">
-                                        {{ __('Remember Me') }}
+                        <div class="form-group">
+                            <div class="col-md-6 col-md-offset-4">
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}> Remember Me
                                     </label>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="form-group row mb-0">
-                            <div class="col-md-8 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Login') }}
+                        <div class="form-group">
+                            <div class="col-md-8 col-md-offset-4">
+                                <button type="submit" class="button is-block is-info is-large is-fullwidth">
+                                    Login
                                 </button>
 
                                 <a class="btn btn-link" href="{{ route('password.request') }}">
-                                    {{ __('Forgot Your Password?') }}
+                                    Forgot Your Password?
                                 </a>
                             </div>
                         </div>
@@ -68,4 +111,8 @@
         </div>
     </div>
 </div>
-@endsection
+</div>
+</section>
+
+</body>
+</html>

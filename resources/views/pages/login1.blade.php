@@ -39,8 +39,7 @@ config(['global.pagename' => 'login']);
 @include('included.nav')
 <section class="is-success is-fullheight">
     <div class="columns is-vcentered">
-        <div class="column">
-            <div class="hero-body">
+            <div class="hero-body column">
                 <div id = "container" class="container has-text-centered level-item">
                     <div>
                         <h3 class="title has-text-grey">Login</h3>
@@ -67,7 +66,6 @@ config(['global.pagename' => 'login']);
                         <p class="has-text-grey">
                             <a href="../">Forgot Password</a> &nbsp;·&nbsp;
                         </p>
-                    </div>
                     </div>
                 </div>
             </div>
