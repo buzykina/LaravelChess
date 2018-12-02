@@ -93,6 +93,9 @@ $id = Auth::id();
 					echo "<a><li>Admin</li></a>";
 				}
 			?>
+			<a href = "<?php
+            echo URL::to('/')."/logout";
+            ?>"><li>Log out</li></a>
 		  </ul>
 		</aside>
 		</div>

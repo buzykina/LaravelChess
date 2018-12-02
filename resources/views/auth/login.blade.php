@@ -29,6 +29,9 @@
         #col1{
             border-left: thick solid grey;
         }
+        #pass{
+            padding: 0 0 10px 0 !important;
+        }
     </style>
 
 </head>
@@ -38,7 +41,6 @@ config(['global.pagename' => 'login']);
 ?>
 @include('included.nav')
 <section class="is-success is-fullheight">
-<div class="container">
     <div class="columns is-vcentered">
         <div class="hero-body column">
             <div id = "container" class="container has-text-centered level-item">
@@ -109,8 +111,75 @@ config(['global.pagename' => 'login']);
                 </div>
             </div>
         </div>
+            </div>
+                <div class="hero-body column">
+                    <div id = "container" class="container has-text-centered level-item">
+                        <div>
+                            <h3 id  = "title" class="title has-text-grey">Sign up</h3>
+
+                            <div class="box">
+                                <form class="form-horizontal" method="POST" action="{{ route('register') }}">
+                                    {{ csrf_field() }}
+
+                                    <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
+                                        <label for="name" class="col-md-4 control-label">Name</label>
+
+                                        <div class="field control">
+                                            <input id="name" type="text" class="input is-large" name="name" value="{{ old('name') }}" required autofocus>
+
+                                            @if ($errors->has('name'))
+                                                <span class="help-block">
+                                        <strong>{{ $errors->first('name') }}</strong>
+                                    </span>
+                                            @endif
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
+                                        <label for="email" class="col-md-4 control-label">E-Mail Address</label>
+
+                                        <div class="field control">
+                                            <input id="email" type="email" class="input is-large" name="email" value="{{ old('email') }}" required>
+
+                                            @if ($errors->has('email'))
+                                                <span class="help-block">
+                                        <strong>{{ $errors->first('email') }}</strong>
+                                    </span>
+                                            @endif
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
+                                        <label for="password" class="col-md-4 control-label">Password</label>
+
+                                        <div class="field control">
+                                            <input id="password" type="password" class="input is-large" name="password" required>
+
+                                            @if ($errors->has('password'))
+                                                <span class="help-block">
+                                        <strong>{{ $errors->first('password') }}</strong>
+                                    </span>
+                                            @endif
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="password-confirm" class="col-md-4 control-label">Confirm Password</label>
+
+                                        <div id = "pass" class="field control">
+                                            <input id="password-confirm" type="password" class="input is-large" name="password_confirmation" required>
+                                        </div>
+                                    </div>
+
+                                        <div class="col-md-6 col-md-offset-4">
+                                            <button type="submit" class="button is-block is-info is-large is-fullwidth">
+                                                Sign up
+                                            </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
     </div>
-</div>
 </div>
 </section>
 

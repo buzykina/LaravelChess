@@ -42,7 +42,14 @@
                       <ul>
                         <li class = "is-active"><a href=" {{ URL::to('/home') }}">Home</a></li>
                         <li><a href="{{URL::to('/rules')}}">Rules</a></li>
-                        <li><a href="{{URL::to('/login')}}">Log IN</a></li>
+                         <?php if(Auth::check())
+                             { ?>
+                              <li><a href="{{URL::to('/profile')}}">Profile</a></li>
+                          <?php }
+                          else
+                              { ?>
+                              <li><a href="{{URL::to('/login')}}">Log IN</a></li>
+                         <?php } ?>
                       </ul>
                   </div>
               <?php
@@ -52,7 +59,14 @@
                       <ul>
                           <li><a href=" {{ URL::to('/home') }}">Home</a></li>
                           <li class = "is-active"><a href="{{URL::to('/rules')}}">Rules</a></li>
+                          <?php if(Auth::check())
+                          { ?>
+                          <li><a href="{{URL::to('/profile')}}">Profile</a></li>
+                          <?php }
+                          else
+                          { ?>
                           <li><a href="{{URL::to('/login')}}">Log IN</a></li>
+                          <?php } ?>
                       </ul>
                   </div>
               <?php
@@ -62,10 +76,34 @@
                       <ul>
                           <li><a href=" {{ URL::to('/home') }}">Home</a></li>
                           <li><a href="{{URL::to('/rules')}}">Rules</a></li>
-                          <li class = "is-active"><a href="{{URL::to('/login')}}">Log IN</a></li>
+                          <?php if(Auth::check())
+                          { ?>
+                          <li><a href="{{URL::to('/profile')}}">Profile</a></li>
+                          <?php }
+                          else
+                          { ?>
+                          <li><a class = "is-active" href="{{URL::to('/login')}}">Log IN</a></li>
+                          <?php } ?>
                       </ul>
                   </div>
-              <?php
+                  <?php
+                  }elseif(config('global.pagename')=='profile'){
+                  ?>
+                  <div class="tabs is-right">
+                      <ul>
+                          <li><a href=" {{ URL::to('/home') }}">Home</a></li>
+                          <li><a href="{{URL::to('/rules')}}">Rules</a></li>
+                          <?php if(Auth::check())
+                          { ?>
+                          <li><a class = "is-active" href="{{URL::to('/profile')}}">Profile</a></li>
+                          <?php }
+                          else
+                          { ?>
+                          <li><a href="{{URL::to('/login')}}">Log IN</a></li>
+                          <?php } ?>
+                      </ul>
+                  </div>
+                  <?php
                       }
 					 else{
               ?>

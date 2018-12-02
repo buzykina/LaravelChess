@@ -19,7 +19,10 @@ Route::get('/login', 'PagesController@login');
 Route::get('/register', 'PagesController@register');
 
 
-Route::get('/profile','PagesController@profile');
+Route::get('profile', function () {
+    return view('pages.profile');
+    // Only authenticated users may enter...
+})->middleware('auth');
 
 Route::get('/admin', function () {
     return view('pages.profile');
