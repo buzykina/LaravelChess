@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Http\Request;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -19,11 +21,6 @@ Route::get('/login', 'PagesController@login');
 Route::get('/register', 'PagesController@register');
 
 
-Route::get('profile', function () {
-    return view('pages.profile');
-    // Only authenticated users may enter...
-})->middleware('auth');
-
 Route::get('/admin', function () {
     return view('pages.profile');
 });
@@ -35,6 +32,28 @@ Route::get('/test', function () {
     return view('included.chat');
 });
 Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');
+
+
+
+Route::post('/update', function(Request $request){
+	$uer=Auth::user();
+	if(!$uer){
+		dd($uer);
+	}
+	DB::table('users')->where('id',$uer->id)->update([
+		'email' => $request->input('email'),
+		'name' => $request->input('uname'),
+	]);
+	return redirect('/profile');
+});
+
+
+
+Route::get('profile', function () {
+    return view('pages.profile');
+    // Only authenticated users may enter...
+})->middleware('auth');
+
 Auth::routes();
 Route::get('/changePassword','HomeController@showChangePasswordForm');
 Route::post('/changePassword','HomeController@changePassword')->name('changePassword');
