@@ -47,6 +47,15 @@ Route::post('/update', function(Request $request){
 	return redirect('/profile');
 });
 
+Route::post('/delete', function(Request $request){
+    $uer=Auth::user();
+    if(!$uer){
+        dd($uer);
+    }
+    DB::table('users')->where('id',$uer->id)->delete();
+    return redirect('/login');
+});
+
 
 
 Route::get('profile', function () {

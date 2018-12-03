@@ -64,6 +64,10 @@ $id = Auth::id();
 			height:35px;
 			border-radius:50%;
 		}
+		#img1{
+			height:250px;
+			margin: 0 20px 0 0;
+		}
 		.input{
 			width:60%;
 		}
@@ -75,6 +79,12 @@ $id = Auth::id();
 		.button:hover{
 			background:#00a8df;
 			color:white;
+		}
+		.hidden{
+			display: none;
+		}
+		#btn{
+			margin: 20px 0 0 0;
 		}
 	
 	</style>
@@ -90,9 +100,9 @@ $id = Auth::id();
 		
 		<aside class="menu">
 		  <ul id="currPageMenu" class="menu-list">
-			<a class="is-active"><li>Edit profile</li></a>
-			<a><li>Change Password</li></a>
-			<a><li>View Stats</li></a>
+			<a id = "edit" class="is-active" ><li>Edit profile</li></a>
+			<a id = "change"><li>Change Password</li></a>
+			<a id = "delete"><li>Delete</li></a>
 			<?php
 				if($id==1){
 					echo "<a><li>Admin</li></a>";
@@ -104,26 +114,7 @@ $id = Auth::id();
 		  </ul>
 		</aside>
 		</div>
-		<div id="content">
-			<aside class="menu">
-				<ul class="menu-list">
-					<li>
-						<div class="columns is-vcentered">
-						  <div class="column is-2"></div>
-						  <div class="column is-2 has-text-right"><img id = "img" src="https://i.imgur.com/Pyp4DwX.png"></div>
-						  <div class="column has-text-left">
-							<span class="is-size-6">UserName</span><br>
-							<span class="is-size-7">Change Profile Pic</span>
-						  </div>
-						</div>
-					</li>
-					<li>
-						<div class="columns is-vcentered">
-							<div class="column is-2"></div>
-							<div class="column is-2  has-text-right is-size-7 has-text-weight-semibold">Username</div>
-							<div class="column has-text-left">
-								<input class="input is-size-7" type="text" value="{{$user->name}}"></input>
-		<form action = "{{URL::to('/update')}}" method="post">
+		<form id = "form_edit" action = "{{URL::to('/update')}}" method="post">
 			@csrf
 			<div id="content">
 				<aside class="menu">
@@ -131,7 +122,7 @@ $id = Auth::id();
 						<li>
 							<div class="columns is-vcentered">
 							  <div class="column is-2"></div>
-							  <div class="column is-2 has-text-right"><img src="https://i.imgur.com/Pyp4DwX.png"></div>
+							  <div class="column is-2 has-text-right"><img id = "img" src="https://i.imgur.com/Pyp4DwX.png"></div>
 							  <div class="column has-text-left">
 								<span class="is-size-6">UserName</span><br>
 								<span class="is-size-7">Change Profile Pic</span>
@@ -166,14 +157,9 @@ $id = Auth::id();
 							</div>
 						</li>
 						<li>
-							<div class="columns is-vcentered">
-								<div class="column is-2"></div>
-								<div class="column is-2"></div>
+							<div class="columns is-centered">
 								<div class="column is-2 has-text-left">
 									<input onclick="saveData()" class="button is-size-7 has-text-weight-semibold" value="Submit" type="submit"></input>
-								</div>
-								<div class="column is-size-7  has-text-left">
-									<input class="checkbox" checked="true" value="1" type="checkbox"/> I want to change my information
 								</div>
 							</div>
 						</li>
@@ -181,72 +167,119 @@ $id = Auth::id();
 				</aside>
 			</div>
 		</form>
-
-	</div>
-	<form class="form-horizontal" method="POST" action="{{ route('changePassword') }}">
-		{{ csrf_field() }}
-
-		<div class="form-group{{ $errors->has('current-password') ? ' has-error' : '' }}">
-			<label for="new-password" class="col-md-4 control-label">Current Password</label>
-
-			<div class="col-md-6">
-				<input id="current-password" type="password" class="form-control" name="current-password" required>
-
-				@if ($errors->has('current-password'))
-					<span class="help-block">
+		<form id = "form_change" class="hidden" method="POST" action="{{ route('changePassword') }}">
+			@csrf
+			<div id="content">
+				<aside class="menu">
+					<ul class="menu-list">
+						<li>
+							<div class="columns is-vcentered">
+								<div class="column is-2 form-group{{ $errors->has('current-password') ? ' has-error' : '' }}"></div>
+								<div class="column is-2  has-text-right is-size-7 has-text-weight-semibold">Current Password</div>
+								<div class="column has-text-left">
+									<input id="current-password" type="password" class="input is-size-7 form-control" name="current-password" required>
+									@if ($errors->has('current-password'))
+										<span class="help-block">
                                         <strong>{{ $errors->first('current-password') }}</strong>
                                     </span>
-				@endif
-			</div>
-		</div>
-
-		<div class="form-group{{ $errors->has('new-password') ? ' has-error' : '' }}">
-			<label for="new-password" class="col-md-4 control-label">New Password</label>
-
-			<div class="col-md-6">
-				<input id="new-password" type="password" class="form-control" name="new-password" required>
-
-				@if ($errors->has('new-password'))
-					<span class="help-block">
+									@endif
+								</div>
+							</div>
+						</li>
+						<li>
+							<div class="columns is-vcentered">
+								<div class="column is-2 form-group{{ $errors->has('new-password') ? ' has-error' : '' }}"></div>
+								<div class="column is-2	 has-text-right is-size-7 has-text-weight-semibold">New Password</div>
+								<div class="column has-text-left">
+									<input id="new-password" type="password" class="input is-size-7 form-control" name="new-password" required>
+									@if ($errors->has('new-password'))
+										<span class="help-block">
                                         <strong>{{ $errors->first('new-password') }}</strong>
                                     </span>
-				@endif
-			</div>
-		</div>
+									@endif
 
-		<div class="form-group">
-			<label for="new-password-confirm" class="col-md-4 control-label">Confirm New Password</label>
-
-			<div class="col-md-6">
-				<input id="new-password-confirm" type="password" class="form-control" name="new-password_confirmation" required>
+								</div>
+							</div>
+						</li>
+						<li>
+							<div class="columns is-vcentered">
+								<div class="column is-2"></div>
+								<div class="column is-2  has-text-right is-size-7 has-text-weight-semibold">Confirm New Password</div>
+								<div class="column has-text-left">
+									<input id="new-password-confirm" type="password" class="input is-size-7 form-control" name="new-password_confirmation" required>
+								</div>
+							</div>
+						</li>
+						<li>
+							<div class="columns is-centered">
+								<div class="column is-2 has-text-left">
+									<button class="button is-size-7 has-text-weight-semibold form-control" type="submit">Change Password</button>
+								</div>
+							</div>
+						</li>
+					</ul>
+				</aside>
 			</div>
-		</div>
-
-		<div class="form-group">
-			<div class="col-md-6 col-md-offset-4">
-				<button type="submit" class="btn btn-primary">
-					Change Password
-				</button>
+		</form>
+		<form id = "form_delete" class="hidden" action = "{{URL::to('/delete')}}" method="post">
+			@csrf
+			<div id="content">
+				<aside class="menu">
+					<ul class="menu-list">
+						<li>
+							<div class="columns is-centered">
+								<img id = "img1" src="<?php
+                                echo URL::to('/')."/img/bomb.png";
+                                ?>" >
+							</div>
+						</li>
+						<li>
+							<div class="columns is-centered">
+								<label class="has-text-weight-semibold is-centered">If you are sure that you want to delete your profile press the button</label>
+							</div>
+						</li>
+						<li>
+							<div class="columns is-centered">
+								<div class="column is-2 has-text-left">
+									<button id  = "btn" class="button is-size-7 has-text-weight-semibold form-control" type="submit">Delete</button>
+								</div>
+							</div>
+						</li>
+					</ul>
+				</aside>
 			</div>
-		</div>
-	</form>
+		</form>
+	</div>
 
 
 <script>
-	function addOnclicks(){
-		let arr=document.getElementById("currPageMenu").children;
-		for(let i=0;i<arr.length;i++){
-			arr[i].onclick = function(){
-				arr[i].classList.add("is-active");
-				for(let j=0;j<arr.length;j++){
-					if(j!=i){
-						arr[j].classList.remove("is-active");
-					}
-				}
-			}
-		}
-	}
-	addOnclicks();
+	document.getElementById("edit").addEventListener("click",function ()
+	{
+        document.getElementById("edit").classList.add('is-active');
+        document.getElementById("change").classList.remove('is-active');
+        document.getElementById("delete").classList.remove('is-active');
+        document.getElementById("form_edit").classList.remove('hidden');
+        document.getElementById("form_change").classList.add('hidden');
+        document.getElementById("form_delete").classList.add('hidden');
+	});
+    document.getElementById("change").addEventListener("click",function ()
+    {
+        document.getElementById("edit").classList.remove('is-active');
+        document.getElementById("delete").classList.remove('is-active');
+        document.getElementById("change").classList.add('is-active');
+        document.getElementById("form_edit").classList.add('hidden');
+        document.getElementById("form_change").classList.remove('hidden');
+        document.getElementById("form_delete").classList.add('hidden');
+    });
+    document.getElementById("delete").addEventListener("click",function ()
+    {
+        document.getElementById("delete").classList.add('is-active');
+        document.getElementById("edit").classList.remove('is-active');
+        document.getElementById("change").classList.remove('is-active');
+        document.getElementById("form_edit").classList.add('hidden');
+        document.getElementById("form_change").classList.add('hidden');
+        document.getElementById("form_delete").classList.remove('hidden');
+    });
 </script>
 </body>
 </html>

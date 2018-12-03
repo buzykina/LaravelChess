@@ -1,9 +1,11 @@
 <?php
-<<<<<<< HEAD
 
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+
 
 class UserController extends Controller
 {
@@ -46,25 +48,4 @@ class UserController extends Controller
 
         return redirect()->route('pages.profile');
     }
-
-=======
-namespace App\Http\Controllers;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-
-class UserController extends Controller
-{
-    
-	 /* Update the given user.
-     *
-     * @param  Request  $request
-     * @param  string  $id
-     * @return Response
-     */
-    public function update(Request $request)
-    {
-		
-    }
->>>>>>> a8dcc2a863aca926992730885f853bc7582727d7
 }
