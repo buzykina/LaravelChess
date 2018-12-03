@@ -48,12 +48,17 @@ $id = Auth::id();
 			display:inline-block;
 			vertical-align:top;
 		}
-		#content{
+		form{
 			width:calc(75% - 5px);
 			height:100%;
 			display:inline-block;
 			text-align:center;
 			padding-top:15px;
+		}
+		#content{
+			width:100%;
+			height:100%;
+			text-align:center;
 		}
 		img{
 			height:35px;
@@ -99,61 +104,64 @@ $id = Auth::id();
 		  </ul>
 		</aside>
 		</div>
-		<div id="content">
-			<aside class="menu">
-				<ul class="menu-list">
-					<li>
-						<div class="columns is-vcentered">
-						  <div class="column is-2"></div>
-						  <div class="column is-2 has-text-right"><img src="https://i.imgur.com/Pyp4DwX.png"></div>
-						  <div class="column has-text-left">
-							<span class="is-size-6">UserName</span><br>
-							<span class="is-size-7">Change Profile Pic</span>
-						  </div>
-						</div>
-					</li>
-					<li>
-						<div class="columns is-vcentered">
-							<div class="column is-2"></div>
-							<div class="column is-2  has-text-right is-size-7 has-text-weight-semibold">Username</div>
-							<div class="column has-text-left">
-								<input class="input is-size-7" type="text" value="{{$user->name}}"></input>
+		<form action = "{{URL::to('/update')}}" method="post">
+			@csrf
+			<div id="content">
+				<aside class="menu">
+					<ul class="menu-list">
+						<li>
+							<div class="columns is-vcentered">
+							  <div class="column is-2"></div>
+							  <div class="column is-2 has-text-right"><img src="https://i.imgur.com/Pyp4DwX.png"></div>
+							  <div class="column has-text-left">
+								<span class="is-size-6">UserName</span><br>
+								<span class="is-size-7">Change Profile Pic</span>
+							  </div>
 							</div>
-						</div>
-					</li>
-					<li>
-						<div class="columns is-vcentered">
-							<div class="column is-2"></div>
-							<div class="column is-2	 has-text-right is-size-7 has-text-weight-semibold">Email</div>
-							<div class="column has-text-left">
-								<input class="input is-size-7" type="text" value="{{$user->email}}"></input>
+						</li>
+						<li>
+							<div class="columns is-vcentered">
+								<div class="column is-2"></div>
+								<div class="column is-2  has-text-right is-size-7 has-text-weight-semibold">Username</div>
+								<div class="column has-text-left">
+									<input name="uname" class="input is-size-7" type="text" value="{{$user->name}}"></input>
+								</div>
 							</div>
-						</div>
-					</li>
-					<li>
-						<div class="columns is-vcentered">
-							<div class="column is-2"></div>
-							<div class="column is-2	 has-text-right is-size-7 has-text-weight-semibold">Chess Score</div>
-							<div class="column has-text-left has-text-weight-bold">
-								12000
+						</li>
+						<li>
+							<div class="columns is-vcentered">
+								<div class="column is-2"></div>
+								<div class="column is-2	 has-text-right is-size-7 has-text-weight-semibold">Email</div>
+								<div class="column has-text-left">
+									<input name="email" class="input is-size-7" type="text" value="{{$user->email}}"></input>
+								</div>
 							</div>
-						</div>
-					</li>
-					<li>
-						<div class="columns is-vcentered">
-							<div class="column is-2"></div>
-							<div class="column is-2"></div>
-							<div class="column is-2 has-text-left">
-								<input class="button is-size-7 has-text-weight-semibold" value="Submit" type="button"></input>
+						</li>
+						<li>
+							<div class="columns is-vcentered">
+								<div class="column is-2"></div>
+								<div class="column is-2	 has-text-right is-size-7 has-text-weight-semibold">Chess Score</div>
+								<div class="column has-text-left has-text-weight-bold">
+									12000
+								</div>
 							</div>
-							<div class="column is-size-7  has-text-left">
-								<input class="checkbox" checked="true" value="1" type="checkbox"/> I want to change my information
+						</li>
+						<li>
+							<div class="columns is-vcentered">
+								<div class="column is-2"></div>
+								<div class="column is-2"></div>
+								<div class="column is-2 has-text-left">
+									<input onclick="saveData()" class="button is-size-7 has-text-weight-semibold" value="Submit" type="submit"></input>
+								</div>
+								<div class="column is-size-7  has-text-left">
+									<input class="checkbox" checked="true" value="1" type="checkbox"/> I want to change my information
+								</div>
 							</div>
-						</div>
-					</li>
-				</ul>
-			</aside>
-		</div>
+						</li>
+					</ul>
+				</aside>
+			</div>
+		</form>
 
 	</div>
 	
