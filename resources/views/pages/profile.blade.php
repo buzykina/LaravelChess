@@ -23,6 +23,7 @@ $id = Auth::id();
 
     <!-- Styles -->
     <link rel="stylesheet" type="text/css" href="{{ url('/css/app.css') }}" />
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	
 	<style>
 		html, body {
@@ -62,6 +63,7 @@ $id = Auth::id();
 		}
 		#img{
 			height:35px;
+			width:35px;
 			border-radius:50%;
 		}
 		#img1{
@@ -86,7 +88,31 @@ $id = Auth::id();
 		#btn{
 			margin: 20px 0 0 0;
 		}
-	
+		#file{
+			display:none;
+		}
+		#fileLabel{
+			color: blue;
+			cursor: pointer;
+		}
+		#fileLabel:hover{
+			color: red;
+		}
+		#blackout{
+			background:#000c;
+			position:fixed;
+			height:100%;
+			width:100%;
+			top:0;
+			z-index:1000000;
+			display:none;
+			text-align:center;
+		}
+		#showImg{
+			margin-top:100px;
+			max-width:100%;
+			max-height:calc(100% - 200px);
+		}
 	</style>
 
 </head>
@@ -114,18 +140,20 @@ $id = Auth::id();
 		  </ul>
 		</aside>
 		</div>
-		<form id = "form_edit" action = "{{URL::to('/update')}}" method="post">
+		<form id = "form_edit" action = "{{URL::to('/update')}}" enctype="multipart/form-data" method="post">
 			@csrf
 			<div id="content">
 				<aside class="menu">
 					<ul class="menu-list">
 						<li>
-							<div class="columns is-vcentered">
+							<div class="columns is-vcente	red">
 							  <div class="column is-2"></div>
-							  <div class="column is-2 has-text-right"><img id = "img" src="https://i.imgur.com/Pyp4DwX.png"></div>
+							  <div class="column is-2 has-text-right"><img id = "img" src="{{$user->imgUrl==""?"https://i.stack.imgur.com/l60Hf.png":URL::to('/').'/storage/'.$user->imgUrl}}"></div>
 							  <div class="column has-text-left">
 								<span class="is-size-6">UserName</span><br>
-								<span class="is-size-7">Change Profile Pic</span>
+								<span id="fileLabel" class="is-size-7">Change Profile Pic</span>
+								<input type="file" name="image" value="" id="file"></input>
+								<input type="hidden" name="_token" value="{{ csrf_token()}}"></input>
 							  </div>
 							</div>
 						</li>
@@ -151,9 +179,7 @@ $id = Auth::id();
 							<div class="columns is-vcentered">
 								<div class="column is-2"></div>
 								<div class="column is-2	 has-text-right is-size-7 has-text-weight-semibold">Chess Score</div>
-								<div class="column has-text-left has-text-weight-bold">
-									12000
-								</div>
+								<div class="column has-text-left has-text-weight-bold">{{$user->score}}</div>
 							</div>
 						</li>
 						<li>
@@ -251,6 +277,9 @@ $id = Auth::id();
 		</form>
 	</div>
 
+	<div id="blackout">
+		<img id="showImg"></img>
+	</div>
 
 <script>
 	document.getElementById("edit").addEventListener("click",function ()
@@ -280,6 +309,35 @@ $id = Auth::id();
         document.getElementById("form_change").classList.add('hidden');
         document.getElementById("form_delete").classList.remove('hidden');
     });
+	
+	function onStartUp(){
+		$('#fileLabel').click(function(){ $('#file').trigger('click'); });
+		$('#file').change(function (evt) {
+			var tgt = evt.target || window.event.srcElement,
+				files = tgt.files;
+
+			// FileReader support
+			if (FileReader && files && files.length) {
+				var fr = new FileReader();
+				fr.onload = function () {
+					document.getElementById("img").src = fr.result;
+				}
+				fr.readAsDataURL(files[0]);
+			}else{
+				console.log("Your browser is too old and doesn't upport file reader. Please update it and try later.")
+			}
+		});
+		$('#img').click(function(){
+			document.getElementById('blackout').style.display="initial";
+			document.getElementById('showImg').src=document.getElementById('img').src;
+		});
+		$('#blackout').click(function(){
+			document.getElementById('blackout').style.display="none";
+			document.getElementById('showImg').src="";
+		});
+	}
+	
+	window.onload = onStartUp();
 </script>
 </body>
 </html>

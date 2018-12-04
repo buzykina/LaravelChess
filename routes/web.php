@@ -36,7 +36,13 @@ Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');
 
 
 Route::post('/update', function(Request $request){
-	$uer=Auth::user();
+	$id = Auth::id();
+	if(!$id){
+		abort(404);
+	}
+	return App::call('App\Http\Controllers\UserController@update',['request'=>$request,'id'=>$id]);
+	
+	/*$uer=Auth::user();
 	if(!$uer){
 		dd($uer);
 	}
@@ -44,7 +50,7 @@ Route::post('/update', function(Request $request){
 		'email' => $request->input('email'),
 		'name' => $request->input('uname'),
 	]);
-	return redirect('/profile');
+	return redirect('/profile');*/
 });
 
 Route::post('/delete', function(Request $request){

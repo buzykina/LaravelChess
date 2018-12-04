@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-
+use app\User;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\File;
 
 class UserController extends Controller
 {
@@ -35,17 +37,26 @@ class UserController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function update(EditUserRequest $request, $id)
+    public function update(Request $request, $id)
     {
-
-        $user = User::findOrFail($id);
+		$user = User::findOrFail($id);
 
         $user->email = $request->email;
-        $user->name = $request->name;
+        $user->name = $request->uname;
+		
+		$img = $request->file('image');
+		if($img){
+			$request->validate([
+				'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+			]);
+			
+			$path=$img->store('profilePics');
+			$user->imgUrl = $path;
+		}
         $user->save();
 
-        flash()->success("Your changes to your account have been saved",'Saved:');
-
-        return redirect()->route('pages.profile');
+        //flash()->success("Your changes to your account have been saved",'Saved:');
+        //return redirect()->route('pages.profile');
+		return redirect('/profile');
     }
 }
