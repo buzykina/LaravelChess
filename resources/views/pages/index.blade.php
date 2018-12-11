@@ -26,6 +26,7 @@
     <div>
         @include('included.nav')
         <img id = "banner" src="'.url()->current().'/../img/banner.jpg">
+		@include('included.chess.chess')
     </div>
     </body>
 </html>

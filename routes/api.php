@@ -33,3 +33,6 @@ Route::post('/chat', function(Request $request) {
 	['message' => $request->input('message'), 'userid' => $request->input('userid'),'created_at' => date('Y-m-d H:i:s')]
 	]);
 });
+
+
+Route::get('/chessinit/{id}', 'ChessInitController@index');

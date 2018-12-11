@@ -31,6 +31,11 @@ Route::get('/rules', 'PagesController@rules');
 Route::get('/test', function () {
     return view('included.chat');
 });
+
+Route::get('/test2', function () {
+    return view('included.chess.chess');
+});
+
 Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');
 
 
@@ -77,8 +82,6 @@ Route::get('/delete/{id}', function($id){
     DB::table('users')->where('id',$id)->delete();
     return redirect('/profile');
 });
-
-
 
 Route::get('profile', function () {
     return view('pages.profile');
