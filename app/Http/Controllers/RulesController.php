@@ -15,7 +15,10 @@ class RulesController extends Controller
     public function update(Request $request){
 		$rule = new Rule;
 		if($request->rulesId != null){
-			$rule = Rule::findOrFail(intval($request->rulesId));
+			$rule = Rule::find(intval($request->rulesId));
+			if($rule == null){
+				$rule = new Rule;
+			}
 		}else{
 			$rule->image="";
 		}
