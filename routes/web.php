@@ -52,7 +52,13 @@ Route::post('/update', function(Request $request){
 	]);
 	return redirect('/profile');*/
 });
-
+Route::post('/rules', function(Request $request){
+	$id = Auth::id();
+	if(!$id){
+		abort(404);
+	}
+	return App::call('App\Http\Controllers\RulesController@update',['request'=>$request]);
+});
 Route::post('/delete', function(Request $request){
     $uer=Auth::user();
     if(!$uer){
@@ -60,6 +66,16 @@ Route::post('/delete', function(Request $request){
     }
     DB::table('users')->where('id',$uer->id)->delete();
     return redirect('/login');
+});
+
+
+Route::get('/delete/{id}', function($id){
+    $uer=Auth::user();
+    if(!$uer || $uer->admin!=1){
+        abort(404);
+    }
+    DB::table('users')->where('id',$id)->delete();
+    return redirect('/profile');
 });
 
 
