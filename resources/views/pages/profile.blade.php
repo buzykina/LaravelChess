@@ -1,13 +1,12 @@
 <?php
 
 use Illuminate\Support\Facades\Auth;
-
 // Get the currently authenticated user...
 $user = Auth::user();
 
 // Get the currently authenticated user's ID...
 $id = Auth::id();
-
+$folder = "profilePics";
 ?>
 
 <!doctype html>
@@ -148,7 +147,7 @@ $id = Auth::id();
 						<li>
 							<div class="columns is-vcente	red">
 							  <div class="column is-2"></div>
-							  <div class="column is-2 has-text-right"><img id = "img" src="{{$user->imgUrl==""?"https://i.stack.imgur.com/l60Hf.png":URL::to('/').'/storage/'.$user->imgUrl}}"></div>
+							  <div class="column is-2 has-text-right"><img id = "img" src="{{$user->imgUrl==""?"https://i.stack.imgur.com/l60Hf.png":URL::to('/').'/storage/profilePics'.$user->imgUrl}}"></div>
 							  <div class="column has-text-left">
 								<span class="is-size-6">UserName</span><br>
 								<span id="fileLabel" class="is-size-7">Change Profile Pic</span>
@@ -321,15 +320,23 @@ $id = Auth::id();
 				var fr = new FileReader();
 				fr.onload = function () {
 					document.getElementById("img").src = fr.result;
+
 				}
 				fr.readAsDataURL(files[0]);
 			}else{
-				console.log("Your browser is too old and doesn't upport file reader. Please update it and try later.")
+				console.log("Your browser is too old and doesn't support file reader. Please update it and try later.")
 			}
 		});
 		$('#img').click(function(){
 			document.getElementById('blackout').style.display="initial";
 			document.getElementById('showImg').src=document.getElementById('img').src;
+			$('#showImg').hover(function () {
+                var src = document.getElementById('img').src.replace('profilePics','pixelate');
+                document.getElementById('showImg').src= src;
+            });
+            document.getElementById('showImg').onmouseout = function() {
+                document.getElementById('showImg').src = document.getElementById('img').src;
+            };
 		});
 		$('#blackout').click(function(){
 			document.getElementById('blackout').style.display="none";

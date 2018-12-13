@@ -53,6 +53,7 @@ Route::post('/update', function(Request $request){
 	return redirect('/profile');*/
 });
 
+
 Route::post('/delete', function(Request $request){
     $uer=Auth::user();
     if(!$uer){
