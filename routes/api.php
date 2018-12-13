@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Auth;
+use App\User;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -21,15 +22,19 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::get('/chat', function() {
 	$request = DB::table('chat')->get();
-	//foreach ($request as $gg) {
-		//$gg = (DB::table('users')->where('id',$gg->userid)->get())->name;
-		
-	//}
+	foreach ($request as $gg) {
+		$gg->userid = (DB::table('users')->where('id',$gg->userid)->get()->first())->name;
+	}
     return $request;
 });
 
 Route::post('/chat', function(Request $request) {
+    $user = Auth::guard('web')->user();
+	$get_result_arr = json_decode($request->getContent(), true);
 	DB::table('chat')->insert([
-	['message' => $request->input('message'), 'userid' => $request->input('userid'),'created_at' => date('Y-m-d H:i:s')]
+	['message' => $get_result_arr['message'], 'userid' => $user->id,'created_at' => date('Y-m-d H:i:s')]
 	]);
 });
+
+
+Route::get('/chessinit/{id}', 'ChessInitController@index');

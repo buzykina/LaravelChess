@@ -1,5 +1,7 @@
 <?php
 
+use app\User;
+use App\Rule;
 use Illuminate\Support\Facades\Auth;
 // Get the currently authenticated user...
 $user = Auth::user();
@@ -34,7 +36,7 @@ $folder = "profilePics";
 		}
 		#mainBod{
 			width:60%;
-			height:70%;
+			min-height:70%;
 			margin-left:20%;
 			margin-top:10px;
 			border:1px solid #00000010;
@@ -90,6 +92,9 @@ $folder = "profilePics";
 		#file{
 			display:none;
 		}
+		#file2{
+			display:none;
+		}
 		#fileLabel{
 			color: blue;
 			cursor: pointer;
@@ -112,6 +117,42 @@ $folder = "profilePics";
 			max-width:100%;
 			max-height:calc(100% - 200px);
 		}
+		<?php
+			if($user->admin==1){
+		?>
+				#userTable{
+					max-height:70%;
+					width:60%;
+					background:#0001;
+					display: inline-block;
+					margin: 0;
+					margin-bottom:20px;
+					border-radius:20px;
+					padding:12px;
+					overflow-y:auto;
+				}
+				.itm{
+					border-bottom: 1px solid LightGray;
+					border-radius:20px;
+					transition: 0.4s all;
+				}
+				.itm:hover{
+					background:#0006;
+					color:white;
+					border-bottom: 1px solid white;
+				}
+				.rulesImg{
+					width:150px;
+					height:150px;
+					max-width:150px;
+				}
+				textarea{
+					vertical-align:middle;
+					min-width:40%;
+					min-height: 33%;
+					height:auto;
+				}
+			<?php }?>
 	</style>
 
 </head>
@@ -129,8 +170,8 @@ $folder = "profilePics";
 			<a id = "change"><li>Change Password</li></a>
 			<a id = "delete"><li>Delete</li></a>
 			<?php
-				if($id==1){
-					echo "<a><li>Admin</li></a>";
+				if($user->admin==1){
+					echo "<a id='admin'><li>Admin</li></a>";
 				}
 			?>
 			<a href = "<?php
@@ -274,6 +315,61 @@ $folder = "profilePics";
 				</aside>
 			</div>
 		</form>
+		<?php
+		if($user->admin==1){
+		?>
+		<form id = "form_admin" class="hidden" action = "{{URL::to('/rules')}}" enctype="multipart/form-data"  method="post">
+			@csrf
+			<div class="columns is-centered">
+				<label class="has-text-weight-semibold is-centered">Users Table. Press on the X to delete the profile.</label>
+			</div>
+			<div class="columns is-centered" id="userTable">
+				<?php
+					$users = User::all();
+					foreach ($users as $u) {
+						echo '<div class="columns has-text-left is-size-5 is-paddingless itm"><span class="column has-text-centered">'.$u->name.'</span><span class="column has-text-centered">'.$u->email.'</span><a class="deleters column has-text-right" href="'.URL::to('/delete/'.$u->id).'">x</a></div>';
+					}
+				?>
+			</div>
+			<div id="content">
+				<aside class="menu">
+					<ul class="menu-list">
+						<li>
+							<br>
+							<br>
+							<div class="columns is-centered">
+								<label class="has-text-weight-semibold is-centered">Add any rules or change those which are already created by inputing their id.<br>
+								If you want to remove a rule, simply delete it's title or description and update.<br>
+								If you want to add a new rule, dont input anything in the Id text box.</label>
+							</div>
+						</li>
+						<br>
+						<br>
+						<li>
+							<div class="columns is-centered">
+								<div class="column has-text-left is-3">
+									<img class="rulesImg" id="rulesImg" src="https://www.w3schools.com/w3css/img_lights.jpg"></img>
+									<input type="file" name="image" value="" id="file2"></input>
+									<input type="hidden" name="_token" value="{{ csrf_token()}}"></input>
+								</div>
+							<div class="column has-text-left has-text-centered">
+								ID: <input type="text" name="rulesId" id="rulesId"/><br><br>
+								Title: <input type="text" name="rulesTitle" id="rulesTitle"/><br><br>
+								Description: <textarea name="rulesDesc" id="rulesDesc"></textarea><br>
+							</div>
+						</li>
+						<li>
+							<div class="columns is-centered">
+								<div class="column is-2 has-text-left">
+									<button class="button is-size-7 has-text-weight-semibold form-control" type="submit">Update</button>
+								</div>
+							</div>
+						</li>
+					</ul>
+				</aside>
+			</div>
+		</form>
+		<?php }?>
 	</div>
 
 	<div id="blackout">
@@ -281,33 +377,18 @@ $folder = "profilePics";
 	</div>
 
 <script>
-	document.getElementById("edit").addEventListener("click",function ()
-	{
-        document.getElementById("edit").classList.add('is-active');
-        document.getElementById("change").classList.remove('is-active');
+	function hideAll(){
         document.getElementById("delete").classList.remove('is-active');
-        document.getElementById("form_edit").classList.remove('hidden');
-        document.getElementById("form_change").classList.add('hidden');
-        document.getElementById("form_delete").classList.add('hidden');
-	});
-    document.getElementById("change").addEventListener("click",function ()
-    {
-        document.getElementById("edit").classList.remove('is-active');
-        document.getElementById("delete").classList.remove('is-active');
-        document.getElementById("change").classList.add('is-active');
-        document.getElementById("form_edit").classList.add('hidden');
-        document.getElementById("form_change").classList.remove('hidden');
-        document.getElementById("form_delete").classList.add('hidden');
-    });
-    document.getElementById("delete").addEventListener("click",function ()
-    {
-        document.getElementById("delete").classList.add('is-active');
-        document.getElementById("edit").classList.remove('is-active');
+		document.getElementById("edit").classList.remove('is-active');
         document.getElementById("change").classList.remove('is-active');
         document.getElementById("form_edit").classList.add('hidden');
         document.getElementById("form_change").classList.add('hidden');
-        document.getElementById("form_delete").classList.remove('hidden');
-    });
+        document.getElementById("form_delete").classList.add('hidden');
+		<?php
+			echo $user->admin==1?"document.getElementById('admin').classList.remove('is-active');\n":"";
+			echo $user->admin==1?"document.getElementById('form_admin').classList.add('hidden');\n":"";
+		?>
+	}
 	
 	function onStartUp(){
 		$('#fileLabel').click(function(){ $('#file').trigger('click'); });
@@ -342,8 +423,68 @@ $folder = "profilePics";
 			document.getElementById('blackout').style.display="none";
 			document.getElementById('showImg').src="";
 		});
+		/////////////////////////////////////////////////////////////////////////////////////////////////////////
+		/////////////////////////////////////////////////////////////////////////////////////////////////////////
+		document.getElementById("edit").addEventListener("click",function ()
+		{
+			hideAll();
+			document.getElementById("edit").classList.add('is-active');
+			document.getElementById("form_edit").classList.remove('hidden');
+		});
+		document.getElementById("change").addEventListener("click",function ()
+		{
+			hideAll();
+			document.getElementById("change").classList.add('is-active');
+			document.getElementById("form_change").classList.remove('hidden');
+		});
+		document.getElementById("delete").addEventListener("click",function ()
+		{
+			hideAll();
+			document.getElementById("delete").classList.add('is-active');
+			document.getElementById("form_delete").classList.remove('hidden');
+		});
+		<?php
+			if($user->admin==1){
+			echo'document.getElementById("admin").addEventListener("click",function (){ hideAll(); document.getElementById("admin").classList.add("is-active"); 			document.getElementById("form_admin").classList.remove("hidden");});';
+			echo "document.getElementById('rulesId').onchange = function(){
+					let id = parseInt(document.getElementById('rulesId').value);
+					for(let i = 0;i<rules.length;i++){
+						if(rules[i]['id']==id){
+							console.log(i);
+							console.log(rules[i]['title']);
+							document.getElementById('rulesTitle').value = rules[i]['title'];
+							document.getElementById('rulesDesc').value = rules[i]['description'];
+							document.getElementById('rulesImg').src = '".URL::to('/')."/' +rules[i]['image'];
+							return;
+						}
+					}
+					document.getElementById('rulesTitle').value='';
+					document.getElementById('rulesDesc').value='';
+					document.getElementById('rulesImg').src='https://www.w3schools.com/w3css/img_lights.jpg';
+				};";
+			echo 	"$('#rulesImg').click(function(){ $('#file2').trigger('click'); });
+					$('#file2').change(function (evt) {
+						var tgt = evt.target || window.event.srcElement, files = tgt.files;
+						if (FileReader && files && files.length) {
+							var fr = new FileReader();
+							fr.onload = function () {
+								document.getElementById('rulesImg').src = fr.result;
+							}
+							fr.readAsDataURL(files[0]);
+						}else{
+							console.log('Your browser is too old and doesn\'t upport file reader. Please update it and try later.');
+						}
+					});";
+			}
+		?>
+		
 	}
+	<?php
+		if($user->admin==1){
+	?>
+	let rules = <?php echo Rule::all();?>;
 	
+	<?php } ?>
 	window.onload = onStartUp();
 </script>
 </body>

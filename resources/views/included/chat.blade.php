@@ -2,41 +2,54 @@
 	#main{
 		width:250px;
 		height:500px;
-		background:black;
+		display:inline-block;
 	}
 	#messages{
-		height:430px;
+		height:405px;
 		width:250px;
 		color:white;
+		overflow-y:auto;
+		background:#0008;
 	}
 	#msg{
 		height:50px;
 		width:250px;
 		resize:none;
 	}
+	.msg{
+		background: darkgoldenrod;
+		margin-bottom:3px;
+		margin-top:3px;
+		border-bottom-right-radius:20px;
+	}
+	
 </style>
 <div id="main">
 	<div id="messages">
 		<?php
 			$msg = DB::table('chat')->get();
 			foreach ($msg as $m){
-				echo $m->userid." ".$m->created_at."<br>";
-				echo '<p>'.$m->message.'</p>';
+				$m->userid = $m->userid = (DB::table('users')->where('id',$m->userid)->get()->first())->name;
+				echo '<div class="msg">'.$m->userid." ".$m->created_at."<br>";
+				echo '<p>'.$m->message.'</p></div>';
 			}
 		?>
 	</div>
 	<textarea id="msg"></textarea>
-	<input type="button" onclick="send()" value="Send message"></input>
+	<input type="button" class="button is-warning" onclick="sendMsgViaChat()" value="Send message"></input>
 </div>
 
 <script>
-	function send(){
-		let txt = document.getElementById("msg").value;
+	function sendMsgViaChat(){
+		let txt = "'"+document.getElementById("msg").value+"'";
 		document.getElementById("msg").innerHTML="";
 		var xhttp = new XMLHttpRequest();
-		xhttp.open("POST", "<?php echo url()->current();?>/../api/chat", true);
+		xhttp.open("POST", "<?php echo URL::to('/');?>/api/chat", true);
 		xhttp.setRequestHeader("Content-type", "application/json");
-		xhttp.send('{"message":"'+txt+'","userid":'+2+'}');
+		let jsonTxt = "{'message':"+txt+"}";
+		jsonTxt = jsonTxt.replace(/'/g,'"');
+		xhttp.send(jsonTxt);
+		xhttp.onreadystatechange = loadDoc();
 	}
 	
 	function loadDoc() {
@@ -46,12 +59,12 @@
 				let response = JSON.parse(xhttp.response);
 				document.getElementById("messages").innerHTML ="";
 				for(let i=0;i<response.length;i++){
-					document.getElementById("messages").innerHTML += response[i]["userid"]+" "+response[i]["created_at"]+'<p>'+response[i]["message"]+'</p>';
+					document.getElementById("messages").innerHTML += "<div class='msg'>"+response[i]["userid"]+" "+response[i]["created_at"]+'<p>'+response[i]["message"]+'</p></div>';
 				}
 		   }
 		};
-		xhttp.open("GET", "<?php echo url()->current();?>/../api/chat", true);
+		xhttp.open("GET", "<?php echo URL::to('/');?>/api/chat", true);
 		xhttp.send(); 
 	}
-	setInterval(loadDoc,1000);
+	setInterval(loadDoc,1500);
 </script>

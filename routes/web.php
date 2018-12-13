@@ -25,12 +25,14 @@ Route::get('/admin', function () {
     return view('pages.profile');
 });
 
-Route::get('/rules', 'PagesController@rules');
-
-
 Route::get('/test', function () {
     return view('included.chat');
 });
+
+Route::get('/test2', function () {
+    return view('included.chess.chess');
+});
+
 Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');
 
 
@@ -52,8 +54,13 @@ Route::post('/update', function(Request $request){
 	]);
 	return redirect('/profile');*/
 });
-
-
+Route::post('/rules', function(Request $request){
+	$id = Auth::id();
+	if(!$id){
+		abort(404);
+	}
+	return App::call('App\Http\Controllers\RulesController@update',['request'=>$request]);
+});
 Route::post('/delete', function(Request $request){
     $uer=Auth::user();
     if(!$uer){
@@ -64,6 +71,14 @@ Route::post('/delete', function(Request $request){
 });
 
 
+Route::get('/delete/{id}', function($id){
+    $uer=Auth::user();
+    if(!$uer || $uer->admin!=1){
+        abort(404);
+    }
+    DB::table('users')->where('id',$id)->delete();
+    return redirect('/profile');
+});
 
 Route::get('profile', function () {
     return view('pages.profile');

@@ -55,14 +55,16 @@
 					<div class="card is-shady">
 						<div class="card-image">
 							<figure class="image is-4by3">
-								<?php echo '<img src = "'.url()->current().$r->image.'" alt="Placeholder image">';?>
+								<?php echo '<img src = "'.URL::to('/').$r->image.'" alt="Placeholder image">';?>
 							</figure>
 						</div>
 						<div class="card-content">
 							<div class="content">
 								<h4><?php echo $r->title; ?></h4>
-								<p><?php $pos=strpos($r->description, ' ', 120);
-                                    echo substr($r->description,0,$pos );?> . . .
+								<p><?php $pos=strlen($r->description)>120?strpos($r->description, ' ', 120):strlen($r->description);
+                                    echo substr($r->description,0,$pos );
+									echo $pos>=120?". . .":"";
+								?>
 								</p>
 								<span class="button is-link modal-button" style="background-color: gray">More info</span>
 							</div>
@@ -93,14 +95,14 @@
                 <div class="card">
                     <div class="card-image">
                         <figure class="image is-4by3">
-                            <?php echo '<img src = "'.url()->current().$r->image.'" alt="Placeholder image">';?>
+                            <?php echo '<img src = "'.URL::to('/').$r->image.'" alt="Placeholder image">';?>
                         </figure>
                     </div>
                     <div class="card-content">
                         <div class="media">
                             <div class="media-left">
                                 <figure class="image is-48x48">
-                                    <?php echo '<img src = "'.url()->current().'/../img/we.jpg"  alt="linda barret avatar">';?>
+                                    <?php echo '<img src = "'.URL::to('/').'/img/we.jpg"  alt="linda barret avatar">';?>
                                 </figure>
                             </div>
                             <div class="media-content">
