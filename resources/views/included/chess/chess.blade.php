@@ -11,6 +11,7 @@
 		#helper{
 			display:inline-block;
 			left:520px;
+			vertical-align: top;
 			top:0;
 			border: 1px solid black;
 			width:300px;
@@ -37,7 +38,6 @@
 	</style>
 </head>
 <body>
-	<canvas width="500" height="500" id="canvas"></canvas>
 	<div id="helper">
 		<div id="moves">
 		</div>
@@ -45,6 +45,7 @@
 			<input type="file" id = "file-input"/>
 		</div>
 	</div>
+	<canvas width="500" height="500" id="canvas"></canvas>
 	<input type="hidden" id="aidi" value="{{Auth::id()}}"></input>
 	<script src="{{URL::to('/')}}/js/chess.js"></script>
 </body>

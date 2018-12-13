@@ -3,6 +3,9 @@
     #banner{
         width:100%;
     }
+	#m{
+		margin-top:20px;
+	}
 </style>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
@@ -23,10 +26,11 @@
     <?php
     config(['global.pagename' => 'home']);
     ?>
-    <div>
-        @include('included.nav')
-        <img id = "banner" src="'.url()->current().'/../img/banner.jpg">
+	@include('included.nav')
+    <div id="m">
+		<!--<img id = "banner" src="'.url()->current().'/../img/banner.jpg">--> 
 		@include('included.chess.chess')
+		@include('included.chat')
     </div>
     </body>
 </html>
