@@ -145,6 +145,7 @@ $folder = "profilePics";
 					width:150px;
 					height:150px;
 					max-width:150px;
+					cursor:pointer;
 				}
 				textarea{
 					vertical-align:middle;
@@ -168,12 +169,13 @@ $folder = "profilePics";
 		  <ul id="currPageMenu" class="menu-list">
 			<a id = "edit" class="is-active" ><li>Edit profile</li></a>
 			<a id = "change"><li>Change Password</li></a>
-			<a id = "delete"><li>Delete</li></a>
+			<a id = "export" href="{{URL::to('pdfview')}}"><li>Export to PDF</li></a>
 			<?php
 				if($user->admin==1){
 					echo "<a id='admin'><li>Admin</li></a>";
 				}
 			?>
+			<a id = "delete"><li>Delete</li></a>
 			<a href = "<?php
             echo URL::to('/')."/logout";
             ?>"><li>Log out</li></a>
@@ -381,6 +383,7 @@ $folder = "profilePics";
         document.getElementById("delete").classList.remove('is-active');
 		document.getElementById("edit").classList.remove('is-active');
         document.getElementById("change").classList.remove('is-active');
+        document.getElementById("export").classList.remove('is-active');
         document.getElementById("form_edit").classList.add('hidden');
         document.getElementById("form_change").classList.add('hidden');
         document.getElementById("form_delete").classList.add('hidden');
@@ -443,6 +446,11 @@ $folder = "profilePics";
 			document.getElementById("delete").classList.add('is-active');
 			document.getElementById("form_delete").classList.remove('hidden');
 		});
+        document.getElementById("export").addEventListener("click",function ()
+        {
+            hideAll();
+            document.getElementById("export").classList.add('is-active');
+        });
 		<?php
 			if($user->admin==1){
 			echo'document.getElementById("admin").addEventListener("click",function (){ hideAll(); document.getElementById("admin").classList.add("is-active"); 			document.getElementById("form_admin").classList.remove("hidden");});';
@@ -472,7 +480,7 @@ $folder = "profilePics";
 							}
 							fr.readAsDataURL(files[0]);
 						}else{
-							console.log('Your browser is too old and doesn\'t upport file reader. Please update it and try later.');
+							console.log('Your browser is too old and doesn\'t support file reader. Please update it and try later.');
 						}
 					});";
 			}

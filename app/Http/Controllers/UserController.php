@@ -60,7 +60,10 @@ class UserController extends Controller
             $width = 300;
             $height = 300;
             $img1 = Image::make($img);
-            $img1->resize($width, $height) -> save($imageUrl);
+            $img1->resize($width, $height);
+            $watermark = Image::make(public_path('storage/watermark/watermark.png'));
+            $img1->insert($watermark, 'bottom-right', 10, 10);
+            $img1-> save($imageUrl);
             $canvas = Image::canvas($width,$height);
             $canvas -> insert($imageUrl,'center');
             for($i = 0; $i < $height;$i++)

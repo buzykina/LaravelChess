@@ -34,9 +34,17 @@ class RulesController extends Controller
 			$request->validate([
 				'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
 			]);
-			
-			$path=$img->store('rules');
-			$rule->image = "/storage/".$path;
+            $imageName = $img->hashName();
+            $directory = public_path('storage/rules/');
+            $imageUrl = $directory.$imageName;
+            $width = 300;
+            $height = 300;
+            $img1 = Image::make($img);
+            $img1->resize($width, $height);
+            $watermark = Image::make(public_path('storage/watermark/watermark.png'));
+            $img1->insert($watermark, 'bottom-right', 10, 10);
+			$img1-> save($imageUrl);
+			$rule->image = '/'.$imageName;
 		}
 		$rule->save();
 

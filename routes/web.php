@@ -54,6 +54,11 @@ Route::post('/update', function(Request $request){
 	]);
 	return redirect('/profile');*/
 });
+Route::get('pdfview','ItemController@pdfview');
+Route::get('/pdfview/pdf','ItemController@pdfconversion');
+Route::get('/rules', function () {
+    return view('pages.rules');
+});
 Route::post('/rules', function(Request $request){
 	$id = Auth::id();
 	if(!$id){
@@ -84,8 +89,7 @@ Route::get('profile', function () {
     return view('pages.profile');
     // Only authenticated users may enter...
 })->middleware('auth');
-
-Auth::routes();
 Route::get('/changePassword','HomeController@showChangePasswordForm');
 Route::post('/changePassword','HomeController@changePassword')->name('changePassword');
+Auth::routes();
 //Route::get('/home', 'HomeController@index')->name('home');
