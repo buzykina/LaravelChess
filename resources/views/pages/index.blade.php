@@ -31,8 +31,7 @@
     <div id="m">
 		<!--<img id = "banner" src="'.url()->current().'/../img/banner.jpg">--> 
 		@include('included.chess.chess')
-		<?php //@include('included.chat')
-		?>
+		@include('included.chat')
     </div>
     </body>
 </html>

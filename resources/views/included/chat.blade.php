@@ -29,9 +29,12 @@
 		<?php
 			$msg = DB::table('chat')->get();
 			foreach ($msg as $m){
-				$m->userid = $m->userid = (DB::table('users')->where('id',$m->userid)->get()->first())->name;
-				echo '<div class="msg">'.$m->userid." ".$m->created_at."<br>";
-				echo '<p>'.$m->message.'</p></div>';
+				$name = (DB::table('users')->where('id','=',$m->userid)->get()->first());
+				if($name){
+					$name = $name->name;
+					echo '<div class="msg">'.$name." ".$m->created_at."<br>";
+					echo '<p>'.$m->message.'</p></div>';
+				}
 			}
 		?>
 	</div>
