@@ -35,23 +35,37 @@
 			}
 		?>
 	</div>
-	<textarea id="msg"></textarea>
+	<textarea id="msg"  <?php
+		if(!Auth::user()){
+			echo "disabled = 'true'>You need to be logged in in order to access the chat!";
+		}else{
+			echo ">";
+		}
+		?>
+	</textarea>
 	<input type="button" class="button is-warning" onclick="sendMsgViaChat()" value="Send message"></input>
 </div>
 
 <script>
-	function sendMsgViaChat(){
-		let txt = "'"+document.getElementById("msg").value+"'";
-		document.getElementById("msg").innerHTML="";
-		var xhttp = new XMLHttpRequest();
-		xhttp.open("POST", "<?php echo URL::to('/');?>/api/chat", true);
-		xhttp.setRequestHeader("Content-type", "application/json");
-		let jsonTxt = "{'message':"+txt+"}";
-		jsonTxt = jsonTxt.replace(/'/g,'"');
-		xhttp.send(jsonTxt);
-		xhttp.onreadystatechange = loadDoc();
-	}
-	
+	<?php
+		if(Auth::user()){
+	?>
+			function sendMsgViaChat(){
+				let txt = "'"+document.getElementById("msg").value.replace("'","&#39")+"'";
+				document.getElementById("msg").innerHTML="";
+				var xhttp = new XMLHttpRequest();
+				xhttp.open("POST", "<?php echo URL::to('/');?>/api/chat", true);
+				xhttp.setRequestHeader("Content-type", "application/json");
+				let jsonTxt = "{'message':"+txt+"}";
+				jsonTxt = jsonTxt.replace(/'/g,'"');
+				xhttp.send(jsonTxt);
+				xhttp.onreadystatechange = loadDoc();
+			}
+	<?php 
+		}else{
+			echo "function sendMsgViaChat(){}";
+		}
+	?>
 	function loadDoc() {
 		var xhttp = new XMLHttpRequest();
 		xhttp.onreadystatechange = function() {
