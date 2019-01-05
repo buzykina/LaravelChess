@@ -17,8 +17,9 @@ class CreateMovesTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('gameid');
             $table->unsignedInteger('userid');
-            $table->string('frompoition');
+            $table->string('fromposition');
             $table->string('toposition');
+            $table->timestamps();
         });
     }
 

@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use App\Events\eventTrigger;
 
 /*
 |--------------------------------------------------------------------------
@@ -93,3 +94,32 @@ Route::get('/changePassword','HomeController@showChangePasswordForm');
 Route::post('/changePassword','HomeController@changePassword')->name('changePassword');
 Auth::routes();
 //Route::get('/home', 'HomeController@index')->name('home');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Route::get('/start/{id}',function ($id){
+	event(new eventTrigger($id,0));
+});
+Route::get('/move/{id}',function ($id){
+	event(new eventTrigger($id,1));
+});
+
+
+

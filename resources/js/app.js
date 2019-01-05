@@ -5,7 +5,8 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-//require('./bootstrap');
+//not sure if I should comment this or not
+require('./bootstrap');
 
 window.Vue = require('vue');
 
@@ -51,5 +52,11 @@ Vue.component(
         });
     })();
 const app = new Vue({
-    el: '#app'
+    el: '#app',
+	created(){
+		Echo.channel('channelDemoEvent')
+			.listen('eventTrigger',(e) => {
+				console.log(e);
+			});
+	}
 });

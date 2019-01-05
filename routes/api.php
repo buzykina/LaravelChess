@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\User;
+use App\Events\eventTrigger;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -32,9 +33,28 @@ Route::post('/chat', function(Request $request) {
     $user = Auth::guard('web')->user();
 	$get_result_arr = json_decode($request->getContent(), true);
 	DB::table('chat')->insert([
-	['message' => $get_result_arr['message'], 'userid' => $user->id,'created_at' => date('Y-m-d H:i:s')]
+		['message' => $get_result_arr['message'], 'userid' => $user->id,'created_at' => date('Y-m-d H:i:s')]
 	]);
 });
 
 
-Route::get('/chessinit/{id}', 'ChessInitController@index');
+Route::get('/chessinit', 'ChessInitController@index');
+Route::get('/test', function(){
+	event(new eventTrigger());
+});
+
+
+Route::post('/chessinit', function(Request $request){
+	
+	return App::call('App\Http\Controllers\ChessInitController@start',['request'=>$request]);
+});
+
+
+Route::post('/move', function(Request $request){ 
+	return App::call('App\Http\Controllers\ChessInitController@move',['request'=>$request]);
+});
+
+Route::post('/moveget', function(Request $request){ 
+	return App::call('App\Http\Controllers\ChessInitController@moveGET',['request'=>$request]);
+});
+
