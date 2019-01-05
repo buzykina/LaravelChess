@@ -26,11 +26,13 @@
         #title{
             margin: 0px 0 10px 0;
         }
-        #col1{
-            border-left: thick solid grey;
-        }
+
         #pass{
             padding: 0 0 10px 0 !important;
+        }
+        .for-error{
+            width:345px !important;
+            margin-top: 50px !important;
         }
     </style>
 
@@ -42,9 +44,9 @@ config(['global.pagename' => 'login']);
 @include('included.nav')
 <section class="is-success is-fullheight">
     <div class="columns is-vcentered">
-        <div class="hero-body column">
+        <div class="hero-body column is-half">
             <div id = "container" class="container has-text-centered level-item">
-                <div>
+                <div @if ($errors->has('email')) class="for-error" @endif>
                     <h3 class="title has-text-grey">Login</h3>
                     <p id = "subtitle" class="subtitle has-text-grey">Please login to proceed.</p>
                     <div class="box">
@@ -112,9 +114,9 @@ config(['global.pagename' => 'login']);
             </div>
         </div>
             </div>
-                <div class="hero-body column">
+                <div class="hero-body column is-half">
                     <div id = "container" class="container has-text-centered level-item">
-                        <div>
+                        <div @if ($errors->has('email')) class="for-error" @endif>
                             <h3 id  = "title" class="title has-text-grey">Sign up</h3>
 
                             <div class="box">

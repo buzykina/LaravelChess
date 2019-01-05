@@ -9,7 +9,7 @@
     .navbar-item:hover {
         background-color: grey !important;
     }
-    .tabs li.is-active a {
+    .tabs1 li.is-active a {
         border-bottom-color: grey !important;
         color: grey !important;
     }
@@ -38,7 +38,7 @@
                   if(config('global.pagename')=='home')
                       {
               ?>
-                  <div class="tabs is-right">
+                  <div class="tabs tabs1 is-right">
                       <ul>
                         <li class = "is-active"><a href=" {{ URL::to('/home') }}">Home</a></li>
                         <li><a href="{{URL::to('/rules')}}">Rules</a></li>

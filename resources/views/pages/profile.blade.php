@@ -24,6 +24,7 @@ $folder = "profilePics";
 
     <!-- Styles -->
     <link rel="stylesheet" type="text/css" href="{{ url('/css/app.css') }}" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	
 	<style>
@@ -78,13 +79,16 @@ $folder = "profilePics";
 			background:#00a8df77;
 			color:white;
 			border:0;
+            margin-top: 20px;
+            height: 40px;
+            width: 100px;
 		}
 		.button:hover{
 			background:#00a8df;
 			color:white;
 		}
 		.hidden{
-			display: none;
+			display: none !important;
 		}
 		#btn{
 			margin: 20px 0 0 0;
@@ -122,7 +126,7 @@ $folder = "profilePics";
 		?>
 				#userTable{
 					max-height:70%;
-					width:60%;
+					width:100%;
 					background:#0001;
 					display: inline-block;
 					margin: 0;
@@ -153,6 +157,24 @@ $folder = "profilePics";
 					min-height: 33%;
 					height:auto;
 				}
+				#admin1{
+					display: inline-block;
+					width: 74%;
+				}
+				.tab .is-active a{
+					color: #3490dc !important;
+				}
+				#form_rule{
+					width: 100% !important;
+					padding: 0 50px !important;
+				}
+
+                #form_user{
+                    width: 100% !important;
+                }
+                #column{
+                    margin-left: 30px !important;
+                }
 			<?php }?>
 	</style>
 
@@ -169,7 +191,7 @@ $folder = "profilePics";
 		  <ul id="currPageMenu" class="menu-list">
 			<a id = "edit" class="is-active" ><li>Edit profile</li></a>
 			<a id = "change"><li>Change Password</li></a>
-			<a id = "export" href="{{URL::to('pdfview')}}"><li>Export to PDF</li></a>
+			<a id = "export" href="{{URL::to('pdfview')}}"><li>Export Rules to PDF</li></a>
 			<?php
 				if($user->admin==1){
 					echo "<a id='admin'><li>Admin</li></a>";
@@ -188,7 +210,7 @@ $folder = "profilePics";
 				<aside class="menu">
 					<ul class="menu-list">
 						<li>
-							<div class="columns is-vcente	red">
+							<div class="columns is-vcentered">
 							  <div class="column is-2"></div>
 							  <div class="column is-2 has-text-right"><img id = "img" src="{{$user->imgUrl==""?"https://i.stack.imgur.com/l60Hf.png":URL::to('/').'/storage/profilePics'.$user->imgUrl}}"></div>
 							  <div class="column has-text-left">
@@ -320,57 +342,76 @@ $folder = "profilePics";
 		<?php
 		if($user->admin==1){
 		?>
-		<form id = "form_admin" class="hidden" action = "{{URL::to('/rules')}}" enctype="multipart/form-data"  method="post">
-			@csrf
-			<div class="columns is-centered">
-				<label class="has-text-weight-semibold is-centered">Users Table. Press on the X to delete the profile.</label>
+		<div id = "admin1" class = "hidden">
+			<div id = "tab" class="tabs is-boxed">
+				<ul>
+					<li id = "rules">
+						<a>
+							Rules
+						</a>
+					</li>
+					<li id = "users">
+						<a>
+							Users
+						</a>
+					</li>
+				</ul>
 			</div>
-			<div class="columns is-centered" id="userTable">
-				<?php
-					$users = User::all();
-					foreach ($users as $u) {
-						echo '<div class="columns has-text-left is-size-5 is-paddingless itm"><span class="column has-text-centered">'.$u->name.'</span><span class="column has-text-centered">'.$u->email.'</span><a class="deleters column has-text-right" href="'.URL::to('/delete/'.$u->id).'">x</a></div>';
-					}
-				?>
-			</div>
-			<div id="content">
-				<aside class="menu">
-					<ul class="menu-list">
-						<li>
+		<form id = "form_rule" class = "hidden" action = "{{URL::to('/rules')}}" enctype="multipart/form-data"  method="post">
+				@csrf
+				<div id="content">
+					<aside class="menu">
+						<ul class="menu-list">
+							<li>
+								<div class="columns is-centered">
+									<label class="has-text-weight-semibold is-centered">Add any rules or change those which are already created by inputing their id.<br>
+										If you want to remove a rule, simply delete it's title or description and update.<br>
+										If you want to add a new rule, dont input anything in the Id text box.</label>
+								</div>
+							</li>
 							<br>
 							<br>
-							<div class="columns is-centered">
-								<label class="has-text-weight-semibold is-centered">Add any rules or change those which are already created by inputing their id.<br>
-								If you want to remove a rule, simply delete it's title or description and update.<br>
-								If you want to add a new rule, dont input anything in the Id text box.</label>
-							</div>
-						</li>
-						<br>
-						<br>
-						<li>
-							<div class="columns is-centered">
-								<div class="column has-text-left is-3">
-									<img class="rulesImg" id="rulesImg" src="https://www.w3schools.com/w3css/img_lights.jpg"></img>
-									<input type="file" name="image" value="" id="file2"></input>
-									<input type="hidden" name="_token" value="{{ csrf_token()}}"></input>
+                            <br>
+							<li>
+								<div class="columns is-centered">
+									<div class="column has-text-left is-3">
+										<img class="rulesImg" id="rulesImg" src={{URL::to('/').'/storage/logos/upload.png'}}>
+										<input type="file" name="image" value="" id="file2">
+										<input type="hidden" name="_token" value="{{ csrf_token()}}">
+									</div>
+									<div id = "column" class="column has-text-left has-text-centered">
+										ID: <input type="text" name="rulesId" id="rulesId"/><br><br>
+										Title: <input type="text" name="rulesTitle" id="rulesTitle"/><br><br>
+										Description: <textarea name="rulesDesc" id="rulesDesc"></textarea><br>
+									</div>
 								</div>
-							<div class="column has-text-left has-text-centered">
-								ID: <input type="text" name="rulesId" id="rulesId"/><br><br>
-								Title: <input type="text" name="rulesTitle" id="rulesTitle"/><br><br>
-								Description: <textarea name="rulesDesc" id="rulesDesc"></textarea><br>
-							</div>
-						</li>
-						<li>
-							<div class="columns is-centered">
-								<div class="column is-2 has-text-left">
-									<button class="button is-size-7 has-text-weight-semibold form-control" type="submit">Update</button>
+							</li>
+							<li>
+								<div class="columns is-centered">
+									<div class="column is-2 has-text-left">
+										<button class="button is-size-7 has-text-weight-semibold form-control" type="submit">Update</button>
+									</div>
 								</div>
-							</div>
-						</li>
-					</ul>
-				</aside>
-			</div>
-		</form>
+							</li>
+						</ul>
+					</aside>
+				</div>
+			</form>
+			<form id = "form_user" class="hidden" action = "{{URL::to('/rules')}}" enctype="multipart/form-data"  method="post">
+				@csrf
+				<div class="columns is-centered">
+					<label class="has-text-weight-semibold is-centered">Users Table. Press on the X to delete the profile.</label>
+				</div>
+				<div class="columns is-centered" id="userTable">
+                    <?php
+                    $users = User::all();
+                    foreach ($users as $u) {
+                        echo '<div class="columns has-text-left is-size-5 is-paddingless itm"><span class="column has-text-centered">'.$u->name.'</span><span class="column has-text-centered">'.$u->email.'</span><a class="deleters column has-text-right" href="'.URL::to('/delete/'.$u->id).'"><i class="material-icons">&#xE872;</i></a></div>';
+                    }
+                    ?>
+				</div>
+			</form>
+		</div>
 		<?php }?>
 	</div>
 
@@ -389,7 +430,7 @@ $folder = "profilePics";
         document.getElementById("form_delete").classList.add('hidden');
 		<?php
 			echo $user->admin==1?"document.getElementById('admin').classList.remove('is-active');\n":"";
-			echo $user->admin==1?"document.getElementById('form_admin').classList.add('hidden');\n":"";
+			echo $user->admin==1?"document.getElementById('admin1').classList.add('hidden');\n":"";
 		?>
 	}
 	
@@ -453,7 +494,12 @@ $folder = "profilePics";
         });
 		<?php
 			if($user->admin==1){
-			echo'document.getElementById("admin").addEventListener("click",function (){ hideAll(); document.getElementById("admin").classList.add("is-active"); 			document.getElementById("form_admin").classList.remove("hidden");});';
+			echo'document.getElementById("admin").addEventListener("click",function (){ hideAll(); document.getElementById("admin").classList.add("is-active");document.getElementById("users").classList.remove("is-active"); document.getElementById("form_user").classList.add("hidden"); document.getElementById("form_rule").classList.remove("hidden"); document.getElementById("rules").classList.add("is-active");
+			document.getElementById("admin1").classList.remove("hidden");});';
+			echo'document.getElementById("rules").addEventListener("click",function (){ hideAll(); document.getElementById("rules").classList.add("is-active"); document.getElementById("users").classList.remove("is-active");
+			document.getElementById("admin1").classList.remove("hidden"); document.getElementById("form_rule").classList.remove("hidden"); document.getElementById("form_user").classList.add("hidden");});';
+			echo'document.getElementById("users").addEventListener("click",function (){ hideAll(); document.getElementById("users").classList.add("is-active"); document.getElementById("rules").classList.remove("is-active");
+			document.getElementById("admin1").classList.remove("hidden"); document.getElementById("form_rule").classList.add("hidden"); document.getElementById("form_user").classList.remove("hidden");});';
 			echo "document.getElementById('rulesId').onchange = function(){
 					let id = parseInt(document.getElementById('rulesId').value);
 					for(let i = 0;i<rules.length;i++){

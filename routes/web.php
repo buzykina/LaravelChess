@@ -18,7 +18,6 @@ Route::get('/', 'PagesController@index');
 Route::get('/home', 'PagesController@index');
 
 Route::get('/login', 'PagesController@login');
-Route::get('/register', 'PagesController@register');
 
 
 Route::get('/admin', function () {
@@ -89,6 +88,7 @@ Route::get('profile', function () {
     return view('pages.profile');
     // Only authenticated users may enter...
 })->middleware('auth');
+
 Route::get('/changePassword','HomeController@showChangePasswordForm');
 Route::post('/changePassword','HomeController@changePassword')->name('changePassword');
 Auth::routes();

@@ -12,8 +12,8 @@ class ChatTableSeeder extends Seeder
     public function run()
     {
 		DB::table('chat')->insert([
-			[ 'userid' => 20, 'message' => "new message",'created_at' => date('Y-m-d H:i:s')],
-			[ 'userid' => 21, 'message' => "Yo yo yo!",'created_at' => date('Y-m-d H:i:s')],
+			[ 'userid' => 1, 'message' => "new message",'created_at' => date('Y-m-d H:i:s')],
+			[ 'userid' => 2, 'message' => "Yo yo yo!",'created_at' => date('Y-m-d H:i:s')],
 		]);
     }
 }
