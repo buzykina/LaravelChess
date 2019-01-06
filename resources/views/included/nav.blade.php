@@ -4,14 +4,18 @@
         max-height: 2.5rem;
     }
     .navbar{
-        background-color:  rgba(0, 0, 0,.1)  !important;
+        background-color:  #ffd166  !important;
     }
     .navbar-item:hover {
-        background-color: grey !important;
+        background-color: #06d6a0 !important;
     }
-    .tabs1 li.is-active a {
-        border-bottom-color: grey !important;
-        color: grey !important;
+    .navbar-end .tabs1 li.is-active a {
+        border-bottom-color: #06d6a0 !important;
+        color: #06d6a0 !important;
+    }
+    .navbar-end .tabs1 li a:hover{
+        border-bottom-color: #06d6a0 !important;
+        color: #06d6a0 !important;
     }
     ul{
         border: 0 !important;
@@ -55,7 +59,7 @@
               <?php
                       }elseif(config('global.pagename')=='rules'){
               ?>
-                  <div class="tabs is-right">
+                  <div class="tabs tabs1 is-right">
                       <ul>
                           <li><a href=" {{ URL::to('/home') }}">Home</a></li>
                           <li class = "is-active"><a href="{{URL::to('/rules')}}">Rules</a></li>
@@ -72,7 +76,7 @@
               <?php
                       }elseif(config('global.pagename')=='login'){
               ?>
-                  <div class="tabs is-right">
+                  <div class="tabs tabs1 is-right">
                       <ul>
                           <li><a href=" {{ URL::to('/home') }}">Home</a></li>
                           <li><a href="{{URL::to('/rules')}}">Rules</a></li>
@@ -82,20 +86,20 @@
                           <?php }
                           else
                           { ?>
-                          <li><a class = "is-active" href="{{URL::to('/login')}}">Log IN</a></li>
+                          <li class = "is-active"><a href="{{URL::to('/login')}}">Log IN</a></li>
                           <?php } ?>
                       </ul>
                   </div>
                   <?php
                   }elseif(config('global.pagename')=='profile'){
                   ?>
-                  <div class="tabs is-right">
+                  <div class="tabs tabs1 is-right">
                       <ul>
                           <li><a href=" {{ URL::to('/home') }}">Home</a></li>
                           <li><a href="{{URL::to('/rules')}}">Rules</a></li>
                           <?php if(Auth::check())
                           { ?>
-                          <li><a class = "is-active" href="{{URL::to('/profile')}}">Profile</a></li>
+                          <li class = "is-active"><a href="{{URL::to('/profile')}}">Profile</a></li>
                           <?php }
                           else
                           { ?>
@@ -107,7 +111,7 @@
                       }
 					 else{
               ?>
-				  <div class="tabs is-right">
+				  <div class="tabs tabs1 is-right">
                       <ul>
                           <li><a href=" {{ URL::to('/home') }}">Home</a></li>
                           <li><a href="{{URL::to('/rules')}}">Rules</a></li>

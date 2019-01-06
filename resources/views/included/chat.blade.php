@@ -9,20 +9,18 @@
 		width:250px;
 		color:white;
 		overflow-y:auto;
-		background:#0008;
+		background:#ef476f;
 	}
 	#msg{
 		height:50px;
 		width:250px;
 		resize:none;
 	}
-	.msg{
-		background: darkgoldenrod;
-		margin-bottom:3px;
-		margin-top:3px;
-		border-bottom-right-radius:20px;
+	.msg {
+		background: transparent;
+		margin-bottom: 3px;
+		margin-top: 3px;
 	}
-	
 </style>
 <div id="main">
 	<div id="messages">
@@ -38,7 +36,7 @@
 			}
 		?>
 	</div>
-	<textarea id="msg"  <?php
+	<textarea id="msg">  <?php
 		if(!Auth::user()){
 			echo "disabled = 'true'>You need to be logged in in order to access the chat!";
 		}else{
@@ -46,7 +44,7 @@
 		}
 		?>
 	</textarea>
-	<input type="button" class="button is-warning" onclick="sendMsgViaChat()" value="Send message"></input>
+	<input type="button" class="button is-warning" onclick="sendMsgViaChat()" value="Send message">
 </div>
 
 <script>
