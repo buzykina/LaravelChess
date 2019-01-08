@@ -36,7 +36,7 @@
 			}
 		?>
 	</div>
-	<textarea id="msg">  <?php
+	<textarea id="msg"  <?php
 		if(!Auth::user()){
 			echo "disabled = 'true'>You need to be logged in in order to access the chat!";
 		}else{
